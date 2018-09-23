@@ -2,8 +2,8 @@
  * @param {number[]} row
  * @return {number}
  */
-const minSwapsCouples = row => {
-  const findTheOther = num => num % 2 ? num - 1 : num + 1;
+const minSwapsCouples = (row) => {
+  const findTheOther = num => (num % 2 ? num - 1 : num + 1);
 
   const hash = row.reduce((res, e, i) => {
     res[e] = i;

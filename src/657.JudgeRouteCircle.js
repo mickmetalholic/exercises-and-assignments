@@ -2,7 +2,7 @@
  * @param {string} moves
  * @return {boolean}
  */
-const judgeCircle = moves => {
+const judgeCircle = (moves) => {
   const map = {
     U: [0, 1],
     D: [0, -1],
@@ -14,6 +14,6 @@ const judgeCircle = moves => {
       res[0] += map[e][0];
       res[1] += map[e][1];
       return res;
-    }, [0 ,0])
+    }, [0, 0])
     .every(e => e === 0);
 };

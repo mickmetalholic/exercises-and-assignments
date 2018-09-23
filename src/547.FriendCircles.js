@@ -3,11 +3,11 @@
  * @return {number}
  */
 
-const findCircleNum = M => {
+const findCircleNum = (M) => {
   const count = M.length;
   const father = Array.from({ length: count }).fill(-1);
 
-  const findRoot = i => {
+  const findRoot = (i) => {
     if (father[i] < 0) {
       return i;
     }
