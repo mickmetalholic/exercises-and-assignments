@@ -17,7 +17,7 @@ const findCircleNum = (M) => {
   };
 
   M.forEach((row, i) => {
-    for (let j = i + 1; j < row.length; j++) {
+    for (let j = i + 1; j < row.length; j += 1) {
       if (row[j]) {
         // union
         const iRoot = findRoot(i);
@@ -27,7 +27,7 @@ const findCircleNum = (M) => {
             father[iRoot] = jRoot;
           } else {
             if (father[iRoot] === father[jRoot]) {
-              father[iRoot]--;
+              father[iRoot] -= 1;
             }
             father[jRoot] = iRoot;
           }
@@ -38,3 +38,5 @@ const findCircleNum = (M) => {
 
   return father.filter(e => e < 0).length;
 };
+
+module.exports = findCircleNum;

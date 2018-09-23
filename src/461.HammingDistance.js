@@ -5,14 +5,18 @@
  */
 const hammingDistance = (x, y) => {
   let res = 0;
-  while (x > 0 || y > 0) {
+  let xx = x;
+  let yy = y;
+  while (xx > 0 || yy > 0) {
     const bitX = x % 2;
     const bitY = y % 2;
     if (bitX !== bitY) {
-      res++;
+      res += 1;
     }
-    x = Math.floor(x / 2);
-    y = Math.floor(y / 2);
+    xx = Math.floor(x / 2);
+    yy = Math.floor(y / 2);
   }
   return res;
 };
+
+module.exports = hammingDistance;
