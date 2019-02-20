@@ -14,7 +14,6 @@ function rob(nums) {
   for (let i = 3; i < nums.length - 1; i++) {
     dp1[i] = Math.max(dp1[i - 2], dp1[i - 3]) + nums[i];
   }
-  const max1 = Math.max(dp1[nums.length - 3], dp1[nums.length - 2]);
 
   const dp2 = [];
   dp2[0] = nums[1];
@@ -23,7 +22,6 @@ function rob(nums) {
   for (let i = 3; i < nums.length - 1; i++) {
     dp2[i] = Math.max(dp2[i - 2], dp2[i - 3]) + nums[i + 1];
   }
-  const max2 = Math.max(dp2[nums.length - 3], dp2[nums.length - 2]);
 
-  return Math.max(max1, max2);
+  return Math.max(dp1[nums.length - 3], dp1[nums.length - 2], dp2[nums.length - 3], dp2[nums.length - 2]);
 }
