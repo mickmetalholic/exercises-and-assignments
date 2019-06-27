@@ -13,8 +13,8 @@ Build a hash table to record the indices of every element of the array. Then ite
 
 ## One-pass Hash Table
 
-Build a hash table while interating the array. The hash table stores the previous elements in the array of the current element. For every number, look up the index of the complement. If it exists, get the result. If it doesn't, add the number to the hash table.
+Build a hash table while interating the array. The hash table stores the previous elements in the array of the current element. For every number, look up the index of the complement. If it exists, get the result. If it doesn't, add the number and its index to the hash table.
 
-Comlexity Analysis:
+**Comlexity Analysis**:
 1. Time Complexity: O(n). We need to traverse the array once.
 2. Space Complexity: O(n). The extra space required most is depended on the number of the elements which is n.
