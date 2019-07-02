@@ -4,8 +4,5 @@
  * @return {void} Do not return anything, modify nums in-place instead.
  */
 function rotate(nums, k) {
-  for (let i = 0; i < k; i++) {
-    nums.unshift(nums.pop());
-  }
-  return nums;
+  nums.unshift(...nums.splice(nums.length - k, k));
 }
