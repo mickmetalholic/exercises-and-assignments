@@ -1,6 +1,6 @@
 # Solutions
 
-## Elementry Math
+## Elementary Math
 
 Sum every digits from the least-significant to the most-significant digit. Summing two numbers may cause "overflow", so we need another variable to track the carry. The value of the carry must be either 1 or 0, because the largest possible sum is 1 + 9 + 9 = 19.
 
