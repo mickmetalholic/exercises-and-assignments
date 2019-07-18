@@ -9,5 +9,5 @@ Sum every digits from the least-significant to the most-significant digit. Summi
 1. After handling all the nodes of the two lists, we need to check if the carry is 1. If so, we need add another node to the end of the list.
 
 **Complexity Analysis**:
-1. Time Complexity: O(max(m, n)). Assume `m` and `n` are the length of the two lists respectively, the algorithm iterates at most `max(m, n)` times.
-1. Space Complexity: O(max(m, n)). The algorithm needs `max(m, n) + 1` nodes to store the result.
+1. Time Complexity: `O(max(m, n))`. Assume `m` and `n` are the length of the two lists respectively, the algorithm iterates at most `max(m, n)` times.
+1. Space Complexity: `O(max(m, n))`. The algorithm needs `max(m, n) + 1` nodes to store the result.
