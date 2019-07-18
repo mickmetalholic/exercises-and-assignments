@@ -11,7 +11,7 @@ function isValid(s) {
     '(': ')',
   };
   const stack = [];
-  for (const ch of s.length) {
+  for (const ch of s) {
     if (ch === '(' || ch === '[' || ch === '{') {
       stack.push(ch);
     } else {
