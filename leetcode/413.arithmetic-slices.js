@@ -8,6 +8,7 @@
  * @return {number}
  */
 function numberOfArithmeticSlices(A) {
+  if (A.length <= 2) return 0;
   let res = 0;
   const dp = [];
   dp[0] = dp[1] = 0;
