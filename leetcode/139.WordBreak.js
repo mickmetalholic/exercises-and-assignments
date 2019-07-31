@@ -12,11 +12,11 @@ function wordBreak(s, wordDict) {
     if (res[s] === false) return false;
 
     for (const word of wordDict) {
-      let newS = s;
-      while (newS.startsWith(word)) {
-        newS = newS.replace(word, '');
+      if (word === s) {
+        return res[s] = true;
+      } else if (s.startsWith(word)) {
+        if (_wordBreak(s.replace(word, ''))) return res[s] = true;
       }
-      if (s !== newS && _wordBreak(newS)) return res[s] = true;
     }
     return res[s] = false;
   }
