@@ -12,31 +12,28 @@ function canIWin(maxChoosableInteger, desiredTotal) {
   if ((1 + maxChoosableInteger) * maxChoosableInteger / 2 < desiredTotal) return false;
 
   const res = {};
-  return dfs(desiredTotal, new Array(maxChoosableInteger + 1).fill(0).join(''));
+  return dfs(desiredTotal, 0);
 
   /**
+   * whether the first person can win in the current situation
    * @param {number} target
-   * @param {number[]} used
+   * @param {number} used
    */
   function dfs(target, used) {
     if (res.hasOwnProperty(used)) return res[used];
 
-    for (let i = maxChoosableInteger; i > 0; i--) {
-      if (used[i] === '0') {
-        if (i >= target) {
-          res[used] = true;
-          return true;
-        } else {
-          const nextUsed = used.split('');
-          nextUsed[i] = 1;
-          if (!dfs(target - i, nextUsed.join(''))) {
-            res[used] = true;
-            return true;
-          }
+    // iterate from largest one because the condition
+    // i >= target would fulfill earlier
+    for (let i = maxChoosableInteger; i >= 1; i--) {
+      if ((used & (1 << (i - 1))) === 0) {
+        if (
+          target <= i
+          || !dfs(target - i, used + (1 << (i - 1)))
+        ) {
+          return res[used] = true;
         }
       }
     }
-    res[used] = false;
-    return false;
+    return res[used] = false;
   }
 }
