@@ -8,5 +8,5 @@ The results are triplets, which means they are formed of 3 numbers. We can set t
 1. To avoid duplicate results, we need first sort the array, and skip the duplicate numbers during iterating.
 
 **Complexity Analysis**:
-1. Time Complexity: `O(n^2)`. We need process all the remain elements in every iteration;
+1. Time Complexity: `O(nlogn + n^2) = O(n^2)`. We need process all the remain elements in every iteration;
 1. Space Complexity: `O(1)`. No extra space is required.
