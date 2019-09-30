@@ -1,5 +1,1 @@
-# LeetCode
-
-# LintCode
-
-# Cracking the Coding Interview
+# Practices and Assignments
