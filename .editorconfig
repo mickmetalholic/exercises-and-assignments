@@ -7,10 +7,10 @@ end_of_line = lf
 insert_final_newline = true
 
 # Set default charset
-[*.{md,js,java,cc}]
+[*.{md,js,java,cc,scm}]
 charset = utf-8
 
 # 2 space indentation
-[*.{js,java,cc}]
+[*.{js,java,cc,scm}]
 indent_style = space
 indent_size = 2
