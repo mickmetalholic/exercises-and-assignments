@@ -4,29 +4,23 @@
  * @return {number[][]}
  */
 function combinationSum(candidates, target) {
-  candidates.sort((a, b) => a - b);
-
   const res = [];
-  _conbinationSum([], candidates, target, res);
+  dfs([], target, 0);
   return res;
 
-  function _conbinationSum(combination, candidates, remain, res) {
-    for (let i = 0; i < candidates.length; i++) {
-      if (candidates[i] > remain) return;
+  function dfs(combination, curTarget, index) {
+    if (curTarget === 0) {
+      res.push(combination.slice());
+      return;
+    };
 
-      const maxCount = Math.floor(remain / candidates[i]);
-      const nextCandidates = candidates.slice(i + 1);
-
-      let nextRemain = remain;
-      for (let count = 1; count <= maxCount; count++) {
-        nextRemain -= candidates[i];
-        const nextCombination = combination.concat(new Array(count).fill(candidates[i]));
-        if (nextRemain === 0) {
-          res.push(nextCombination);
-        } else {
-          _conbinationSum(nextCombination, nextCandidates, nextRemain, res);
-        }
-      }
+    if (curTarget - candidates[index] >= 0) {
+      combination.push(candidates[index]);
+      dfs(combination, curTarget - candidates[index], index);
+      combination.pop(candidates[index]);
+    }
+    if (index + 1 < candidates.length) {
+      dfs(combination, curTarget, index + 1);
     }
   }
 }
