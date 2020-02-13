@@ -3,24 +3,17 @@
  * @return {void} Do not return anything, modify nums in-place instead.
  */
 function sortColors(nums) {
-  let redNum = 0, blueNum = 0;
-  let cur = 0;
-  while (cur < nums.length - blueNum) {
-    if (nums[cur] === 0) {
-      _swap(cur, redNum);
-      redNum++;
-      cur++;
-    } else if (nums[cur] === 2) {
-      _swap(cur, nums.length - 1 - blueNum);
-      blueNum++
+  let i = -1, j = nums.length, k = 0;
+  while (k < j) {
+    if (nums[k] === 0) {
+      i++;
+      [nums[k], nums[i]] = [nums[i], nums[k]];
+      k++;
+    } else if (nums[k] === 2) {
+      j--;
+      [nums[k], nums[j]] = [nums[j], nums[k]];
     } else {
-      cur++;
+      k++;
     }
-  }
-
-  function _swap(i, j) {
-    const tmp = nums[i];
-    nums[i] = nums[j];
-    nums[j] = tmp;
   }
 }
