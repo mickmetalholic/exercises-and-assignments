@@ -4,16 +4,15 @@
  * @return {number}
  */
 function coinChange(coins, amount) {
-  const dp = [];
-  dp[0] = 0;
-  for (let i = 1; i <= amount; i++) {
-    let result = -1;
-    coins.forEach(coin => {
-      if (i - coin >= 0 && dp[i - coin] >= 0) {
-        result = result > 0 ? Math.min(dp[i - coin] + 1, result) : (dp[i - coin] + 1);
+  const coinCount = new Array(amount + 1).fill(-1);
+  coinCount[0] = 0;
+  for (const coin of coins) {
+    for (let i = 1; i <= amount; i++) {
+      if (i - coin >= 0 && coinCount[i - coin] > -1) {
+        coinCount[i] = coinCount[i] === -1 ?
+          coinCount[i - coin] + 1 : Math.min(coinCount[i], coinCount[i - coin] + 1);
       }
-    });
-    dp[i] = result;
+    }
   }
-  return dp[amount];
+  return coinCount[amount];
 }
