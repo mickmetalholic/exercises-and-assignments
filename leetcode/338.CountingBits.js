@@ -2,15 +2,15 @@
  * @param {number} num
  * @return {number[]}
  */
-const countBits = num => {
-  return Array.from({ length: num + 1 }, (_, i) => {
-    let count = 0;
-    while (i) {
-      if (i % 2) {
-        count++;
-      }
-      i = Math.floor(i / 2);
+function countBits(num) {
+  if (num === 0) return [0];
+
+  const res = [0, 1];
+  while (res.length <= num) {
+    const size = res.length
+    for (let j = 0; j < size && res.length <= num; j++) {
+      res.push(res[j] + 1);
     }
-    return count;
-  });
-};
+  }
+  return res;
+}

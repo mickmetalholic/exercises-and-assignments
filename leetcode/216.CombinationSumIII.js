@@ -5,23 +5,21 @@
  */
 function combinationSum3(k, n) {
   const res = [];
-  const stack = [];
-  _search(n, 1);
+  search([], n, 1);
   return res;
 
-  function _search(n, i) {
-    if (stack.length === k) {
-      if (n === 0) {
-        res.push(stack.slice());
-      }
+  function search(combination, target, start) {
+    if (target === 0 && combination.length === k) {
+      res.push(combination.slice());
+      return;
+    } else if (target === 0 || combination.length === k) {
       return;
     }
 
-    if (n < 0 || i > 9) return;
-
-    _search(n, i + 1);
-    stack.push(i);
-    _search(n - i, i + 1);
-    stack.pop();
+    for (let i = start; target - i >= 0 && i <= 9; i++) {
+      combination.push(i);
+      search(combination, target - i, i + 1);
+      combination.pop();
+    }
   }
 }
