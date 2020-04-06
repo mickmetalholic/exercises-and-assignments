@@ -42,8 +42,9 @@ class Lexer {
       }
 
       if (OPETATORS.has(this.currentChar)) {
+        const { currentChar } = this;
         this.advance();
-        return new Token(OPERATOR, this.currentChar);
+        return new Token(OPERATOR, currentChar);
       }
 
       throw new Error('Error parsing input');

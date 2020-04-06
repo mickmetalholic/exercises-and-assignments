@@ -4,4 +4,4 @@ const Parser = require('./Parser');
 const text = process.argv[2];
 
 const parser = new Parser(new Lexer(text));
-parser.parse();
+console.log(parser.parse());
