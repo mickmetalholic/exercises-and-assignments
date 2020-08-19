@@ -1,0 +1,22 @@
+{
+  "name": "didact",
+  "version": "1.0.0",
+  "description": "build your own react",
+  "main": "dist/index.js",
+  "scripts": {
+    "dev": "webpack-dev-server"
+  },
+  "keywords": [
+    "react"
+  ],
+  "author": "mickmetalholic <yuanshenmick@gmail.com>",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/core": "^7.10.4",
+    "@babel/preset-react": "^7.10.4",
+    "babel-loader": "^8.1.0",
+    "webpack": "^4.43.0",
+    "webpack-cli": "^3.3.12",
+    "webpack-dev-server": "^3.11.0"
+  }
+}
