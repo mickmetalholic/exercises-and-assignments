@@ -35,23 +35,50 @@ function createDom(fiber) {
   return dom;
 }
 
+/**
+ * commit the root tree
+ */
+function commitRoot() {
+  commitWork(wipRoot.child);
+  wipRoot = null;
+}
+
+/**
+ * commit a unit of work
+ */
+function commitWork(fiber) {
+  if (!fiber) {
+    return;
+  }
+
+  const parentDom = fiber.parent.dom;
+  parentDom.appendChild(fiber.dom);
+  commitWork(fiber.child);
+  commitWork(fiber.sibling);
+}
+
 function render(element, dom) {
-  nextUnitOfWork = {
+  wipRoot = {
     dom,
     props: {
       children: [element],
     },
   };
+  nextUnitOfWork = wipRoot;
 }
 
 function workLoop(deadline) {
   let shouldYield = false;
   while (nextUnitOfWork && !shouldYield) {
-    console.log('nextUnitOfWork', nextUnitOfWork);
-    console.log(deadline.timeRemaining());
     nextUnitOfWork = performUnitOfWork(nextUnitOfWork);
     shouldYield = deadline.timeRemaining() < 1;
   }
+
+  // if all work finished and there is a work in progress tree, commit it to the dom
+  if (!nextUnitOfWork && wipRoot) {
+    commitRoot();
+  }
+
   requestIdleCallback(workLoop);
 }
 
@@ -59,11 +86,6 @@ function performUnitOfWork(fiber) {
   // create dom node for the fiber
   if (!fiber.dom) {
     fiber.dom = createDom(fiber);
-  }
-
-  // append the dom node of the fiber on the parent dom node
-  if (fiber.parent) {
-    fiber.parent.dom.appendChild(fiber.dom);
   }
 
   // create child fiber nodes
@@ -101,6 +123,7 @@ function performUnitOfWork(fiber) {
 }
 
 let nextUnitOfWork = null;
+let wipRoot = null;
 requestIdleCallback(workLoop);
 
 const Didact ={
