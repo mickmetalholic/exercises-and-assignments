@@ -22,9 +22,9 @@ function createTextElement(text) {
 }
 
 /**
- * create a fiber node
- * @param {string} type fiber node type
- * @param {object} props fiber node props
+ * create an element node
+ * @param {string} type node type
+ * @param {object} props node props
  * @param  {...any} children child node objects
  */
 function createElement(type, props, ...children) {
@@ -116,7 +116,12 @@ function commitWork(fiber) {
     return;
   }
 
-  const parentDom = fiber.parent.dom;
+  // find parent dom node recursively
+  let domParentFiber = fiber.parent;
+  while (!domParentFiber.dom) {
+    domParentFiber = domParentFiber.parent;
+  }
+  const parentDom = domParentFiber.dom;
 
   if (
     fiber.effectTag === EFFECT_PLACEMENT &&
@@ -129,12 +134,20 @@ function commitWork(fiber) {
   ) {
     updateDom(fiber.dom, fiber.alternate.props, fiber.props);
   } else if (fiber.effectTag === EFFECT_DELETION) {
-    parentDom.removeChild(fiber.dom);
+    commitDeletion(fiber, parentDom);
   }
 
   if (fiber.effectTag !== EFFECT_DELETION) {
     commitWork(fiber.child);
     commitWork(fiber.sibling);
+  }
+}
+
+function commitDeletion(fiber, parentDom) {
+  if (fiber.dom) {
+    parentDom.removeChild(fiber.dom);
+  } else {
+    commitDeletion(fiber.child, parentDom);
   }
 }
 
@@ -182,14 +195,14 @@ function workLoop(deadline) {
  * @returns {Fiber} the next unit of work
  */
 function performUnitOfWork(fiber) {
-  // create dom node for the fiber
-  if (!fiber.dom) {
-    fiber.dom = createDom(fiber);
+  if (typeof fiber.type === 'function') {
+    // function components
+    updateFunctionComponent(fiber);
+  } else {
+    updateHostComponent(fiber);
   }
+  // TODO: deal with class component
 
-  // create fiber nodes from the fiber's children
-  const elements = fiber.props.children;
-  reconcileChildren(fiber, elements);
 
   // return the next unit of work
   // 1. if the current fiber has children, the next fiber should be its first child
@@ -204,6 +217,20 @@ function performUnitOfWork(fiber) {
     nextFiber = nextFiber.parent;
   }
   return null;
+}
+
+function updateFunctionComponent(fiber) {
+  const children = [fiber.type(fiber.props)];
+  reconcileChildren(fiber, children);
+}
+
+function updateHostComponent(fiber) {
+  // create dom node for the fiber
+  if (!fiber.dom) {
+    fiber.dom = createDom(fiber);
+  }
+  // create fiber nodes from the fiber's children
+  reconcileChildren(fiber, fiber.props.children);
 }
 
 /**
@@ -274,6 +301,7 @@ let currentRoot = null;
 let wipRoot = null;
 // the fiber nodes to be deleted from the dom
 let deletions = [];
+// start the work loop
 requestIdleCallback(workLoop);
 
 const Didact ={
