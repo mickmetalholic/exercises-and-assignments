@@ -1,0 +1,14 @@
+{
+  "name": "sa",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "start": "stream-adventure",
+    "test": "stream-adventure verify"
+  },
+  "dependencies": {
+    "duplexer2": "^0.1.4",
+    "stream-adventure": "^4.1.1"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "name": "lyn",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "learnyounode",
+    "test": "learnyounode verify",
+    "run": "learnyounode run"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "learnyounode": "^3.5.10"
+  }
+}
