@@ -1,4 +1,4 @@
-import Didact from './didact';
+import Didact, { useState } from './didact';
 
 // function update(r) {
 //   Didact.render(r === 1 ? element1 : element2, container);
@@ -27,10 +27,14 @@ import Didact from './didact';
 
 /** @jsx Didact.createElement */
 function App(props) {
+  const [count, setCount] = useState(0);
+
   return (
     <div id="app">
       <h1 title="foo">Hello {props.name}</h1>
       <div className="texts">123</div>
+      <div className="count">{count}</div>
+      <button onClick={_ => setCount(c => c + 1)}>inc</button>
     </div>
   );
 }
