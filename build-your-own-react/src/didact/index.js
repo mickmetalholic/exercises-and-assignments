@@ -8,8 +8,8 @@ const isEvent = key => key.startsWith('on');
 const isProperty = key => key !== 'children' && !isEvent(key);
 
 /**
- * create a text fiber node
- * @param {string} text node text string
+ * create a text element
+ * @param {string} text text string
  */
 function createTextElement(text) {
   return {
@@ -22,9 +22,9 @@ function createTextElement(text) {
 }
 
 /**
- * create an element node
- * @param {string} type node type
- * @param {object} props node props
+ * create an dom element
+ * @param {string} type dom node type
+ * @param {object} props dom node props
  * @param  {...any} children child node objects
  */
 function createElement(type, props, ...children) {
@@ -172,6 +172,10 @@ function render(element, dom) {
   nextUnitOfWork = wipRoot;
 }
 
+/**
+ * requestIdleCallback callback
+ * @param {IdleDeadline} deadline the amount time available
+ */
 function workLoop(deadline) {
   let shouldYield = false;
   while (nextUnitOfWork && !shouldYield) {
@@ -201,8 +205,6 @@ function performUnitOfWork(fiber) {
   } else {
     updateHostComponent(fiber);
   }
-  // TODO: deal with class component
-
 
   // return the next unit of work
   // 1. if the current fiber has children, the next fiber should be its first child
@@ -222,6 +224,10 @@ function performUnitOfWork(fiber) {
 let wipFiber = null;
 let hookIndex = null;
 
+/**
+ * update function component
+ * @param {Fiber} fiber fiber node
+ */
 function updateFunctionComponent(fiber) {
   wipFiber = fiber;
   hookIndex = 0;
@@ -230,6 +236,10 @@ function updateFunctionComponent(fiber) {
   reconcileChildren(fiber, children);
 }
 
+/**
+ * update host component
+ * @param {Fiber} fiber fiber node
+ */
 function updateHostComponent(fiber) {
   // create dom node for the fiber
   if (!fiber.dom) {
@@ -311,6 +321,7 @@ export function useState(initial) {
     queue: [],
   };
 
+  // get the updated hook value
   const actions = oldHook ? oldHook.queue : [];
   actions.forEach(action => hook.state = action(hook.state));
 
@@ -318,6 +329,7 @@ export function useState(initial) {
   hookIndex++;
 
   function setState(action) {
+    // `setState` may be called multiple times during a single loop
     hook.queue.push(action);
     wipRoot = {
       dom: currentRoot.dom,
