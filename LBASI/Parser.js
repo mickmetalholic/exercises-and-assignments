@@ -10,6 +10,12 @@ class Parser {
     this.currentToken = this.lexer.getNextToken();
   }
 
+  /**
+   * Consume the current token if it matches the current lookahead token type, then get
+   * a new token from the lexer and assign the next token to the current token.
+   * If the current token does not match the lookahead token type, throw a syntax error.
+   * @param {string} tokenType current lookahead token type
+   */
   eat(tokenType) {
     if (tokenType === this.currentToken.type) {
       const { currentToken } = this;
@@ -20,11 +26,19 @@ class Parser {
     }
   }
 
+  /**
+   * the factor rule
+   * INTEGER
+   */
   factor() {
     const token = this.eat(INTEGER);
     return token.value;
   }
 
+  /**
+   * the term rule
+   * factor (MUL|DIV factor)*
+   */
   term() {
     let result = this.factor();
 
@@ -39,6 +53,10 @@ class Parser {
     return result;
   }
 
+  /**
+   * the expr rule
+   * term (PLUS/MINUS term)*
+   */
   expr() {
     let result = this.term();
 
