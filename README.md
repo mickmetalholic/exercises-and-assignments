@@ -1,5 +1,1 @@
-# Practices and Assignments
-
-## Resources
-
-- Codewars
+# Practice and Assignments
