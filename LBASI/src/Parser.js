@@ -1,5 +1,20 @@
 const { INTEGER, OPERATOR, EOF, LPAREN, RPAREN } = require('./tokenTypes');
 
+class BinOp {
+  constructor(left, op, right) {
+    this.left = left;
+    this.op = op;
+    this.right = right;
+  }
+}
+
+class Num {
+  constructor(token) {
+    this.token = token;
+    this.value = token.value;
+  }
+}
+
 class Parser {
   /**
    * 
@@ -38,7 +53,7 @@ class Parser {
       return expr;
     } else {
       const token = this.eat(INTEGER);
-      return token.value;
+      return new Num(token);
     }
   }
 
@@ -47,17 +62,13 @@ class Parser {
    * factor (MUL|DIV factor)*
    */
   term() {
-    let result = this.factor();
+    let node = this.factor();
 
     while (['*', '/'].includes(this.currentToken.value)) {
       const operatorToken = this.eat(OPERATOR);
-      if (operatorToken.value === '*') {
-        result *= this.factor();
-      } else {
-        result /= this.factor();
-      }
+      node = new BinOp(node, operatorToken, this.factor());
     }
-    return result;
+    return node;
   }
 
   /**
@@ -65,17 +76,13 @@ class Parser {
    * term (PLUS/MINUS term)*
    */
   expr() {
-    let result = this.term();
+    let node = this.term();
 
     while (['+', '-'].includes(this.currentToken.value)) {
       const operatorToken = this.eat(OPERATOR);
-      if (operatorToken.value === '+') {
-        result += this.term();
-      } else {
-        result -= this.term();
-      }
+      node = new BinOp(node, operatorToken, this.term());
     }
-    return result;
+    return node;
   }
 
   parse() {
