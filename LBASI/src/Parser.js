@@ -1,4 +1,4 @@
-const { INTEGER, OPERATOR, EOF } = require('./tokenTypes');
+const { INTEGER, OPERATOR, EOF, LPAREN, RPAREN } = require('./tokenTypes');
 
 class Parser {
   /**
@@ -31,8 +31,15 @@ class Parser {
    * INTEGER
    */
   factor() {
-    const token = this.eat(INTEGER);
-    return token.value;
+    if (this.currentToken.value === '(') {
+      this.eat(LPAREN);
+      const expr = this.expr();
+      this.eat(RPAREN);
+      return expr;
+    } else {
+      const token = this.eat(INTEGER);
+      return token.value;
+    }
   }
 
   /**

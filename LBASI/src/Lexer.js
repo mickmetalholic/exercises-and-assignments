@@ -1,5 +1,5 @@
 const Token = require('./Token');
-const { INTEGER, OPERATOR, EOF } = require('./tokenTypes');
+const { INTEGER, OPERATOR, EOF, LPAREN, RPAREN } = require('./tokenTypes');
 
 const OPETATORS = new Set(['+', '-', '*', '/']);
 
@@ -35,6 +35,18 @@ class Lexer {
       if (this.currentChar === ' ') {
         this.advance();
         continue;
+      }
+
+      if (this.currentChar === '(') {
+        const { currentChar } = this;
+        this.advance();
+        return new Token(LPAREN, currentChar);
+      }
+
+      if (this.currentChar === ')') {
+        const { currentChar } = this;
+        this.advance();
+        return new Token(RPAREN, currentChar);
       }
 
       if (/\d/.test(this.currentChar)) {
