@@ -1,12 +1,13 @@
 {
   "name": "lbasi",
   "version": "1.0.0",
-  "description": "",
+  "description": "let's build a simple interpreter",
+  "keywords": ["interpreter"],
   "main": "./src/index.js",
   "scripts": {
-    "test": "node __tests__/index.js",
+    "start": "node __tests__/index.js",
     "dev": "node --inspect-brk __tests__/index.js "
   },
-  "author": "",
-  "license": "ISC"
+  "author": "mickmetalholic <yuanshenmick@gmail.com>",
+  "license": "MIT"
 }

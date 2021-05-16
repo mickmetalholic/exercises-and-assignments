@@ -1,4 +1,6 @@
-const interpreter = require('..');
+const interprete = require('..');
 
-const res = interpreter('7 + 3 * (10 / (12 / (3 + 1) - 1)) / (2 + 3) - 5 - 3 + (8)');
-console.log(JSON.stringify(res, ' ', 2));
+const res = interprete('---7 -+- 2');
+console.log(res);
+
+console.log(0);

@@ -8,6 +8,13 @@ class BinOp {
   }
 }
 
+class UnaryOp {
+  constructor(op, expr) {
+    this.op = op;
+    this.expr = expr;
+  }
+}
+
 class Num {
   constructor(token) {
     this.token = token;
@@ -44,6 +51,8 @@ class Parser {
   /**
    * the factor rule
    * INTEGER
+   * LPAREN expr RPAREN
+   * PLUS|MINUS factor
    */
   factor() {
     if (this.currentToken.value === '(') {
@@ -51,6 +60,9 @@ class Parser {
       const expr = this.expr();
       this.eat(RPAREN);
       return expr;
+    } else if (['+', '-'].includes(this.currentToken.value)) {
+      const op = this.eat(OPERATOR);
+      return new UnaryOp(op, this.factor());
     } else {
       const token = this.eat(INTEGER);
       return new Num(token);
@@ -73,7 +85,7 @@ class Parser {
 
   /**
    * the expr rule
-   * term (PLUS/MINUS term)*
+   * term (PLUS|MINUS term)*
    */
   expr() {
     let node = this.term();
