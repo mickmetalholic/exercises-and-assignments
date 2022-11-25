@@ -1,1 +1,1 @@
-# Practice and Assignments
+# Exercises and Assignments
