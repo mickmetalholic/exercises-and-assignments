@@ -6,21 +6,36 @@
 
 // @lc code=start
 function maxEnvelopes (envelopes: number[][]): number {
-  envelopes.sort(([w1], [w2]) => w1 - w2)
+  envelopes.sort(([w1, h1], [w2, h2]) => {
+    if (w1 > w2) {
+      return 1
+    } else if (w1 < w2) {
+      return -1
+    } else {
+      return h2 - h1
+    }
+  })
 
-  let res = 1
-  const counts = [1]
+  const min = [envelopes[0][1]]
   for (let i = 1; i < envelopes.length; i++) {
-    const [w1, h1] = envelopes[i]
-    counts[i] = 1
-    for (let j = 0; j < i; j++) {
-      const [w2, h2] = envelopes[j]
-      if (w1 > w2 && h1 > h2) {
-        counts[i] = Math.max(counts[i], counts[j] + 1)
+    const [, h] = envelopes[i]
+    const index = _search(h, min)
+    min[index] = h
+  }
+  return min.length
+
+  function _search (n: number, arr: number[]): number {
+    let i = 0
+    let j = arr.length
+    while (i < j) {
+      const m = i + Math.floor((j - i) / 2)
+      if (arr[m] < n) {
+        i = m + 1
+      } else {
+        j = m
       }
     }
-    res = Math.max(res, counts[i])
+    return i
   }
-  return res
 }
 // @lc code=end
