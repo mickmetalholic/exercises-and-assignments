@@ -5,7 +5,7 @@
  */
 
 // @lc code=start
-function maxSubArray(nums: number[]): number {
+function maxSubArray (nums: number[]): number {
   let maxSum = nums[0]
   let prev = Math.max(maxSum, 0)
 
