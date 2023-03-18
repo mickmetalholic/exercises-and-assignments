@@ -17,20 +17,32 @@
  * }
  */
 
+// function reverseList (head: ListNode | null): ListNode | null {
+//   if (head === null || head.next === null) {
+//     return head
+//   }
+
+//   let p1: ListNode | null = head
+//   let p2: ListNode | null = null
+//   while (p1 !== null) {
+//     const next = p1.next
+//     p1.next = p2
+//     p2 = p1
+//     p1 = next
+//   }
+
+//   return p2
+// }
+
+// recursive
 function reverseList (head: ListNode | null): ListNode | null {
   if (head === null || head.next === null) {
     return head
   }
 
-  let p1: ListNode | null = head
-  let p2: ListNode | null = null
-  while (p1 !== null) {
-    const next = p1.next
-    p1.next = p2
-    p2 = p1
-    p1 = next
-  }
-
-  return p2
+  const newHead = reverseList(head.next)
+  head.next.next = head
+  head.next = null
+  return newHead
 }
 // @lc code=end

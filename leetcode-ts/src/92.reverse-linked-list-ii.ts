@@ -17,36 +17,63 @@
  * }
  */
 
+// function reverseBetween (head: ListNode | null, left: number, right: number): ListNode | null {
+//   const dummyHead = new ListNode()
+//   dummyHead.next = head
+
+//   let index = 0
+//   let leftNode: ListNode | null = dummyHead
+//   while (leftNode !== null && index < left - 1) {
+//     leftNode = leftNode.next
+//     index++
+//   }
+
+//   if (leftNode === null || leftNode.next === null) {
+//     return head
+//   }
+
+//   const betweenTail = leftNode.next
+//   index++
+//   let p1: ListNode | null = betweenTail
+//   let p2: ListNode | null = null
+//   while (p1 !== null && index <= right) {
+//     const next = p1.next
+//     p1.next = p2
+//     p2 = p1
+//     p1 = next
+//     index++
+//   }
+
+//   leftNode.next = p2
+//   betweenTail.next = p1
+
+//   return dummyHead.next
+// }
+
+// recursive
 function reverseBetween (head: ListNode | null, left: number, right: number): ListNode | null {
-  const dummyHead = new ListNode()
-  dummyHead.next = head
-
-  let index = 0
-  let leftNode: ListNode | null = dummyHead
-  while (leftNode !== null && index < left - 1) {
-    leftNode = leftNode.next
-    index++
-  }
-
-  if (leftNode === null || leftNode.next === null) {
+  if (head === null) {
     return head
   }
 
-  const betweenTail = leftNode.next
-  index++
-  let p1: ListNode | null = betweenTail
-  let p2: ListNode | null = null
-  while (p1 !== null && index <= right) {
-    const next = p1.next
-    p1.next = p2
-    p2 = p1
-    p1 = next
-    index++
+  if (left === 1) {
+    const [newHead] = _reverseN(head, right)
+    return newHead
   }
 
-  leftNode.next = p2
-  betweenTail.next = p1
+  head.next = reverseBetween(head.next, left - 1, right - 1)
+  return head
 
-  return dummyHead.next
+  // reverse n nodes
+  function _reverseN (head: ListNode, n: number): [ListNode, ListNode | null] {
+    if (n === 1 || head.next === null) {
+      return [head, head.next]
+    }
+
+    const [newHead, successor] = _reverseN(head.next, n - 1)
+    head.next.next = head
+    head.next = successor
+    return [newHead, successor]
+  }
 }
 // @lc code=end
