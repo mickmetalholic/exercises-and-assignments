@@ -17,28 +17,48 @@
  * }
  */
 
+// function isPalindrome (head: ListNode | null): boolean {
+//   const stack: number[] = []
+
+//   let p1 = head
+//   let p2 = head
+//   while (p1 !== null && p2 !== null && p2.next !== null) {
+//     stack.push(p1.val)
+//     p1 = p1.next
+//     p2 = p2.next.next
+//   }
+
+//   if (p2 !== null) {
+//     p1 = p1?.next ?? null
+//   }
+
+//   while (p1 !== null) {
+//     if (p1.val !== stack.pop()) {
+//       return false
+//     }
+//     p1 = p1.next
+//   }
+
+//   return true
+// }
+
+// recursive
 function isPalindrome (head: ListNode | null): boolean {
-  const stack: number[] = []
-
-  let p1 = head
-  let p2 = head
-  while (p1 !== null && p2 !== null && p2.next !== null) {
-    stack.push(p1.val)
-    p1 = p1.next
-    p2 = p2.next.next
+  if (head === null) {
+    return true
   }
 
-  if (p2 !== null) {
-    p1 = p1?.next ?? null
-  }
+  let left: ListNode | null = head
+  return _traverse(left)
 
-  while (p1 !== null) {
-    if (p1.val !== stack.pop()) {
-      return false
+  function _traverse (node: ListNode | null): boolean {
+    if (node === null) {
+      return true
     }
-    p1 = p1.next
+    let res = _traverse(node.next)
+    res = res && (left?.val === node.val)
+    left = left === null ? left : left.next
+    return res
   }
-
-  return true
 }
 // @lc code=end
