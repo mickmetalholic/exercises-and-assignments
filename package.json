@@ -1,0 +1,5 @@
+{
+	"devDependencies": {
+		"@stylistic/eslint-plugin-ts": "^2.8.0"
+	}
+}
